@@ -119,11 +119,11 @@
     <br><br>
        <div class="container">
         <div class="starter-template">
-          <p class="lead"><h2>The probability of a sale is sunny! </h2></p>
+        <br>
+          <img src="http://cdn.akamai.steamstatic.com/steam/apps/{{appid}}/header.jpg">
+          <p class="lead"><h2>The probability of a sale in the next month is sunny! </h2></p>
           <p class="lead"><h3> Past Prices</h3></p>
-          <img src="http://127.0.0.1:5000/priceplot.png" alt="" border="0">
-
-          <img src={{urlin}}>
+          <img src="http://127.0.0.1:5000/{{appid}}/priceplot.png" alt="" border="0">
         </div>
       </div>
     </div>
@@ -133,7 +133,7 @@
   <div class="container">
 
     <div class = "container">
-    <br><br>
+  
       <h2>Enter Game</h2>
       <form  action="/ssoutput" method="GET">
         <div class="form-group">
@@ -152,17 +152,6 @@
 
 
 
-
-    <div class="container">
-      <div class="starter-template">
-        <h3>Results:</h3>
-        <p class="lead">Below is the result of your query.<br> You just took user input and looked up the information. Now we need to expand the functionality!</p>
-      </div>
-      <br>
-      <div class = "game-info">
-        Info is {{game_info}}
-      </div>
-     </div><!-- /.container -->
 
 
       <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>

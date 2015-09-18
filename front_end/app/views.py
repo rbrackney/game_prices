@@ -91,7 +91,26 @@ def ss_output():
         query_results = cur.fetchall()
         
     game_info = str(query_results[0]) #just return the first option
-    return render_template("ssoutput.html", game_info = game_info)
+    
+    
+    #imgurl = "http://127.0.0.1:5000/10/priceplot.png" 
+    
+    appid= game_id
+    x = np.array([1,2,3,4,5,6,7,8,9,10])
+    y = np.array([1,2,3,4,5,6,7,8,9,10])
+    graph_response = a_Model.graph_prices(x,y,'stuff')
+    return render_template("ssoutput.html", game_info = game_info, appid = appid)
+
+@app.route('/fig/<cropzonekey>')
+def fig(cropzonekey):
+    fig = draw_polygons(cropzonekey)
+    img = StringIO()
+    fig.savefig(img)
+    img.seek(0)
+    return send_file(img, mimetype='image/png')
+
+
+@app.route
 
 @app.route("/priceplot.png")
 def priceplot():
@@ -99,4 +118,25 @@ def priceplot():
     x = np.array([1,2,3,4,5,6,7,8,9,10])
     y = np.array([1,2,3,4,5,6,7,8,9,10])
     response = a_Model.graph_prices(x,y,'stuff')
+    return response
+
+@app.route("/<appid>/priceplot.png")
+def priceplot2(appid):
+    
+    with db:
+        cur = db.cursor()
+        cur.execute("SELECT plot_x FROM Games WHERE Appid = %d;" % int(appid))
+        query_results = cur.fetchall()
+        p_x = str(query_results[0])
+        cur.execute("SELECT plot_y FROM Games WHERE Appid = %d;" % int(appid))
+        query_results = cur.fetchall()
+        p_y = str(query_results[0])
+        print 'reached here'
+        x = np.array(eval(eval(p_x[1:-2])))
+        y = np.array(eval(eval(p_y[1:-2])))
+        print 'and reached here'
+        print type(x)
+    #x = np.array([1,2,3,4,5,6,7,8,9,10])
+    #y = np.array([1,2,3,4,5,6,7,8,9,10])
+    response = a_Model.graph_prices(x,y,appid)
     return response
