@@ -23,5 +23,12 @@ from sqlalchemy.types import String
 
 df = pd.read_pickle('df_price_cluster.pkl')
 
+
+db2 = mdb.connect(user="root", host="localhost", passwd='hats', db="ssf_db", charset='utf8')
+cur = db2.cursor(mdb.cursors.DictCursor)
+with db2:
+    cur = db2.cursor(mdb.cursors.DictCursor)
+    cur.execute("drop table cluster_price")
+    
 engine = create_engine("mysql+pymysql://root:hats@localhost/ssf_db", echo=False)
 df.to_sql(name='cluster_price', con=engine, if_exists = 'append', index=True)
