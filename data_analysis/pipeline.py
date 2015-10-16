@@ -34,6 +34,16 @@ from sklearn.metrics import confusion_matrix
 from sklearn.externals import joblib
 
 def sort_data(current_epoch,validation_set_prop = 0.20):
+    '''this function conducts all of the additional steps required to
+    pool the different data_frames in which the classifier features were compiled into
+    a matrix.
+    It was originally a large, unwieldy ipython notebook. Now it's just a large, 
+    unwieldy function. 
+    
+    current_epoch is the two-week epoch to extract.
+    validation_set_prop is the proportion of the data set to set aside as a
+    "hold out" set.
+    '''
     df = pd.read_pickle('df_steamdb_timeseries.pkl')
     drop_columns = ['fprice','iprice','price_date','sale_bool',
                 'formatted_no_holiday','saledates_no_holiday',
@@ -109,10 +119,3 @@ def sort_data(current_epoch,validation_set_prop = 0.20):
     data = {'Xall': Xall, 'yall': yall, 'y':y, 'X':X, 'Yv': Yv, 'Xv':Xv, }
     return data
 
-def plot_confusion_matrix(cm, title='Confusion matrix', cmap=plt.cm.Blues):
-    plt.imshow(cm, interpolation='nearest', cmap=cmap)
-    plt.title(title)
-    plt.colorbar()
-    plt.tight_layout()
-    plt.ylabel('True label')
-    plt.xlabel('Predicted label')
